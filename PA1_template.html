@@ -229,7 +229,7 @@ print( mean( total_steps_day$steps ) );
 </code></pre>
 
 <pre><code class="r"># Generate histogram
-png(&quot;plot1.png&quot;);
+png(&quot;instructions_fig/plot1.png&quot;);
 hist( total_steps_day$steps, main=&quot;&quot;, xlab=&quot;Number of steps per day&quot;, ylab=&quot;Frequency&quot;);
 dev.off();
 </code></pre>
@@ -245,7 +245,7 @@ dev.off();
 <pre><code class="r"># Average steps per interval
 avg_steps_interval &lt;- aggregate(steps ~ interval, df, FUN=mean);
 # Plot average steps per interval
-png(&quot;plot2.png&quot;);
+png(&quot;instructions_fig/plot2.png&quot;);
 plot(avg_steps_interval, type=&#39;l&#39;, xlab=&quot;5-min time interval&quot;, ylab=&quot;Average number of steps&quot;)
 dev.off();
 </code></pre>
@@ -297,7 +297,7 @@ print( mean( total_steps_day_new$steps ) );
 </code></pre>
 
 <pre><code class="r"># Generate histogram
-png(&quot;plot3.png&quot;);
+png(&quot;instructions_fig/plot3.png&quot;);
 par(mfrow = c(1,2) )
 hist( total_steps_day$steps, ylim=c(0,40), main=&quot;Original Data&quot;, xlab=&quot;Number of steps per day&quot;, ylab=&quot;Frequency&quot;)
 hist( total_steps_day_new$steps, ylim=c(0,40), main=&quot;Re-filled Data&quot;,  xlab=&quot;Number of steps per day&quot;, ylab=&quot;Frequency&quot;)
@@ -324,7 +324,7 @@ df_new_we &lt;- subset( df_new, day==&quot;weekend&quot; );
 avg_steps_interval_wd &lt;- aggregate(steps ~ interval, df_new_wd, FUN=mean);
 avg_steps_interval_we &lt;- aggregate(steps ~ interval, df_new_we, FUN=mean);
 # Plot average steps per interval
-png(&quot;plot4.png&quot;);
+png(&quot;instructions_fig/plot4.png&quot;);
 par(mfrow = c(2,1) )
 plot( avg_steps_interval_we, type=&#39;l&#39;, main=&quot;Weekend&quot;, xlab=&quot;5-min time interval&quot;, ylab=&quot;Average number of steps&quot;)
 plot(avg_steps_interval_wd, type=&#39;l&#39;, main=&quot;Weekday&quot;, xlab=&quot;5-min time interval&quot;, ylab=&quot;Average number of steps&quot;)

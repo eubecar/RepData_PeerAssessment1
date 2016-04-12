@@ -31,7 +31,7 @@ print( median( total_steps_day$steps ) );
 
 ```r
 # Generate histogram
-png("plot1.png");
+png("instructions_fig/plot1.png");
 hist( total_steps_day$steps, main="", xlab="Number of steps per day", ylab="Frequency");
 dev.off();
 ```
@@ -48,7 +48,7 @@ dev.off();
 # Average steps per interval
 avg_steps_interval <- aggregate(steps ~ interval, df, FUN=mean);
 # Plot average steps per interval
-png("plot2.png");
+png("instructions_fig/plot2.png");
 plot(avg_steps_interval, type='l', xlab="5-min time interval", ylab="Average number of steps")
 dev.off();
 ```
@@ -108,7 +108,7 @@ print( median( total_steps_day_new$steps ) );
 
 ```r
 # Generate histogram
-png("plot3.png");
+png("instructions_fig/plot3.png");
 par(mfrow = c(1,2) )
 hist( total_steps_day$steps, ylim=c(0,40), main="Original Data", xlab="Number of steps per day", ylab="Frequency")
 hist( total_steps_day_new$steps, ylim=c(0,40), main="Re-filled Data",  xlab="Number of steps per day", ylab="Frequency")
@@ -135,7 +135,7 @@ df_new_we <- subset( df_new, day=="weekend" );
 avg_steps_interval_wd <- aggregate(steps ~ interval, df_new_wd, FUN=mean);
 avg_steps_interval_we <- aggregate(steps ~ interval, df_new_we, FUN=mean);
 # Plot average steps per interval
-png("plot4.png");
+png("instructions_fig/plot4.png");
 par(mfrow = c(2,1) )
 plot( avg_steps_interval_we, type='l', main="Weekend", xlab="5-min time interval", ylab="Average number of steps")
 plot(avg_steps_interval_wd, type='l', main="Weekday", xlab="5-min time interval", ylab="Average number of steps")
