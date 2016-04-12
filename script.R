@@ -1,109 +1,76 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
 
+setwd("~/DataScience/Course_05")
 
-## Loading and preprocessing the data
-Code description:
-```
-# Read data (assuming the data file is in the same directory as the script)
+# Read data
 df <- read.csv("activity.csv");
+
 # Format date
 df$date <- as.Date( df$date );
-```
 
-## What is mean total number of steps taken per day?
-
-Code description:
-```
 # Sum steps per day
 total_steps_day <- aggregate(steps ~ date, df, FUN=sum);
+
 # Calculate mean and median
 print( mean( total_steps_day$steps ) );
 print( median( total_steps_day$steps ) );
+
 # Generate histogram
 png("plot1.png");
 hist( total_steps_day$steps, main="", xlab="Number of steps per day", ylab="Frequency")
 dev.off();
-```
-The mean and median are pretty similar:
-```
-[1] 10766.19
-[1] 10765
-```
-![Sample panel plot](instructions_fig/plot1.png) 
 
-## What is the average daily activity pattern?
-Code description:
-```
 # Average steps per interval
 avg_steps_interval <- aggregate(steps ~ interval, df, FUN=mean);
+
 # Plot average steps per interval
 png("plot2.png");
 plot(avg_steps_interval, type='l', xlab="5-min time interval", ylab="Average number of steps")
 dev.off();
+
 # Find the interval where the maximum occurs
 indMax <- max( avg_steps_interval$steps ) == avg_steps_interval$steps;
-max_avg_steps_interval <- avg_steps_interval$interval[indMax];
-```
-The interval where the maximum occurs: 
-```
-[1] 835
-```
-![Sample panel plot](instructions_fig/plot2.png) 
-## Imputing missing values
-Code description
-```
+print( avg_steps_interval$interval[indMax] );
+
 # Count the number of NA values
 print( sum( is.na(df$steps) ) );
+
 # Create a new dataframe to keep the original dataset
 df_new <- df
+
 # Associate the average steps per interval to NA values in "steps_new"
 indToMatch <- match( df_new$interval, avg_steps_interval$interval );
 indNA = is.na( df_new$steps );
 df_new$steps[ indNA ] <- avg_steps_interval$steps[ indToMatch[ indNA ]];
+      
 # Sum steps per day
 total_steps_day_new <- aggregate(steps ~ date, df_new, FUN=sum);
+
 # Calculate mean and median
 print( mean( total_steps_day_new$steps ) );
 print( median( total_steps_day_new$steps ) );
+
 # Generate histogram
 png("plot3.png");
 par(mfrow = c(1,2) )
 hist( total_steps_day$steps, ylim=c(0,40), main="Original Data", xlab="Number of steps per day", ylab="Frequency")
 hist( total_steps_day_new$steps, ylim=c(0,40), main="Re-filled Data",  xlab="Number of steps per day", ylab="Frequency")
 dev.off();
-```
-The number of missing values:
-```
-[1] 2304
-```
-The new mean and median for the re-filled dataset become almosto identical since the re-filling has been done with average values.
-```
-[1] 10766.19
-[1] 10766.19
-```
-![Sample panel plot](instructions_fig/plot3.png) 
-## Are there differences in activity patterns between weekdays and weekends?
-Code description:
-```
+
 # Create a new variable "day" with two levels "Weekday" and "weekend"
 indW = weekdays( df_new$date ) == "Saturday" | weekdays( df_new$date ) == "Sunday";
 df_new$day <- factor( indW , labels = c("weekday","weekend"));
+                     
 # Subset the new dataframe in the factor variable
 df_new_wd <- subset( df_new, day=="weekday" );
 df_new_we <- subset( df_new, day=="weekend" );
+
 # Average steps per interval
 avg_steps_interval_wd <- aggregate(steps ~ interval, df_new_wd, FUN=mean);
 avg_steps_interval_we <- aggregate(steps ~ interval, df_new_we, FUN=mean);
+
 # Plot average steps per interval
 png("plot4.png");
 par(mfrow = c(2,1) )
 plot( avg_steps_interval_we, type='l', main="Weekend", xlab="5-min time interval", ylab="Average number of steps")
 plot(avg_steps_interval_wd, type='l', main="Weekday", xlab="5-min time interval", ylab="Average number of steps")
 dev.off();
-```
-![Sample panel plot](instructions_fig/plot4.png) 
